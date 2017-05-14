@@ -21,46 +21,45 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-namespace SBG\Tests\App;
 
 
-use \Mockery as m;
-use \PHPUnit_Framework_TestCase as TestCase;
-use SBG\App\Entity\WebResult;
-use SBG\App\Model\FakeFetcher;
+
+use \DateTime as DateTime;
+use SBG\App\Helper\Minute;
+use SBG\App\Model\FetcherSelector;
 use SBG\App\Model\GoogleFetcher;
 use SBG\App\Model\RestFetcher;
-use SBG\App\Model\WebFetcher;
+
+require_once 'vendor/autoload.php';
 
 
-/**
- * @author Artur Augustyniak <artur@aaugustyniak.pl>
- */
-class AppTest extends TestCase
-{
-
-    /**
-     * @param WebFetcher $wf
-     * @param string $param
-     */
-    private function makePolimorphicAction(WebFetcher $wf, $param)
-    {
-        var_dump($wf->get($param));
-    }
-
-
-    /**
-     * @test
-     */
-    public function tmp_run()
-    {
-        $param = "blonde";
-        $fetchers = [new RestFetcher(), new GoogleFetcher(), new FakeFetcher()];
-
-        foreach ($fetchers as $fetcher) {
-            $this->makePolimorphicAction($fetcher, $param);
-
-        }
-    }
-
+if (!isset($argv[1])) {
+    echo "give one arg\n";
+    return;
 }
+
+
+$dt = new DateTime();
+$texturalDt = $dt->format("Y-m-d H:i:s");
+$fs = new FetcherSelector(new Minute($dt));
+
+$fs->registerFetcher(new GoogleFetcher())
+    ->registerFetcher(new GoogleFetcher())
+    ->registerFetcher(new RestFetcher());
+
+$fetcher = $fs->getFetcher();
+$fetcherName = get_class($fetcher);
+
+$results = $fetcher->get($argv[1]);
+
+foreach ($results as $r) {
+    echo "#####################################################\n";
+    $msg = sprintf("%s - %s got result: %s\n",
+        $texturalDt,
+        $fetcherName,
+        $r->getPayload()
+    );
+    echo $msg;
+}
+
+
