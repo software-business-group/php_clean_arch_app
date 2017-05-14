@@ -4,8 +4,102 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "59243890a4d10b16171956b9bf2cf23f",
-    "packages": [],
+    "content-hash": "feccaaae84abbfef0d669733c02cfe2d",
+    "packages": [
+        {
+            "name": "mgargano/simplehtmldom",
+            "version": "1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/matgargano/simplehtmldom.git",
+                "reference": "37fb0d7c1bda45c5a4cf14fdef56c1edf6aa42be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/matgargano/simplehtmldom/zipball/37fb0d7c1bda45c5a4cf14fdef56c1edf6aa42be",
+                "reference": "37fb0d7c1bda45c5a4cf14fdef56c1edf6aa42be",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "SimpleHtmlDom": "src/"
+                },
+                "files": [
+                    "src/simple_html_dom.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "The MIT License"
+            ],
+            "authors": [
+                {
+                    "name": "S.C. Chen",
+                    "email": "me578022@gmail.com"
+                }
+            ],
+            "description": "Composer package that gives you access to and (unlike all the others at this time) autoloads S.C. Chen's PHP Simple HTML DOM Parser Library",
+            "homepage": "http://simplehtmldom.sourceforge.net/",
+            "keywords": [
+                "Simple",
+                "dom",
+                "html"
+            ],
+            "time": "2014-01-05T18:17:34+00:00"
+        },
+        {
+            "name": "othercode/rest",
+            "version": "v1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/othercodes/rest.git",
+                "reference": "f4d2d2a7323d904f47fe748e348b26e3b427d2f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/othercodes/rest/zipball/f4d2d2a7323d904f47fe748e348b26e3b427d2f1",
+                "reference": "f4d2d2a7323d904f47fe748e348b26e3b427d2f1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "OtherCode\\Rest\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Unay Santisteban",
+                    "email": "usantisteban@othercode.es",
+                    "homepage": "http://othercode.es/",
+                    "role": "developer"
+                }
+            ],
+            "description": "Rest client to make GET, POST, PUT, DELETE, PATCH, etc calls.",
+            "keywords": [
+                "curl",
+                "http",
+                "requests",
+                "rest"
+            ],
+            "time": "2017-03-13T00:43:54+00:00"
+        }
+    ],
     "packages-dev": [
         {
             "name": "mockery/mockery",

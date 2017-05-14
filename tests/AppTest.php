@@ -26,7 +26,11 @@ namespace SBG\Tests\App;
 
 use \Mockery as m;
 use \PHPUnit_Framework_TestCase as TestCase;
-use SBG\App\App;
+use SBG\App\Entity\WebResult;
+use SBG\App\Model\FakeFetcher;
+use SBG\App\Model\GoogleFetcher;
+use SBG\App\Model\RestFetcher;
+use SBG\App\Model\WebFetcher;
 
 
 /**
@@ -36,15 +40,27 @@ class AppTest extends TestCase
 {
 
     /**
+     * @param WebFetcher $wf
+     * @param string $param
+     */
+    private function makePolimorphicAction(WebFetcher $wf, $param)
+    {
+        var_dump($wf->get($param));
+    }
+
+
+    /**
      * @test
      */
-    public function main_should_return_hello_wold()
+    public function tmp_run()
     {
+        $param = "blonde";
+        $fetchers = [new RestFetcher(), new GoogleFetcher(), new FakeFetcher()];
 
-        $app = new App();
-        $expected = "Hello World";
-        $actual = $app->run();
-        $this->assertEquals($expected, $actual);
+        foreach ($fetchers as $fetcher) {
+            $this->makePolimorphicAction($fetcher, $param);
+
+        }
     }
 
 }
