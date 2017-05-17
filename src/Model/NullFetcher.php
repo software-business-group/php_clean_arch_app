@@ -27,8 +27,15 @@ namespace SBG\App\Model;
 
 use SBG\App\Entity\Result;
 
-class RestFetcher extends DataFetcher
+class NullFetcher extends DataFetcher
 {
+    /**
+     * NullFetcher constructor.
+     */
+    public function __construct()
+    {
+
+    }
 
     /**
      * @param $param string
@@ -36,45 +43,6 @@ class RestFetcher extends DataFetcher
      */
     public function fetch($param)
     {
-        if ($this->strategy->useRest()) {
-            return $this->fetchDataImpl($param);
-        } else {
-            return $this->nextFetcher->fetch($param);
-        }
-    }
-
-    /**
-     * @return array
-     */
-    private function fetchDataImpl()
-    {
-        $results = [];
-        try {
-
-            $api = new \OtherCode\Rest\Rest(new \OtherCode\Rest\Core\Configuration(array(
-                'url' => 'http://jsonplaceholder.typicode.com/',
-                'httpheader' => array(
-                    'some_header' => 'some_value',
-                )
-            )));
-            $api->setDecoder("json");
-
-            //$query = urlencode("sunt aut facere repellat provident occaecati excepturi optio reprehenderit");
-            $queryString = sprintf("posts");
-
-            $response = $api->get($queryString);
-            foreach ($response->body as $e) {
-                $webResult = new Result();
-                $webResult->setPayload($e->body);
-                $results[] = $webResult;
-            }
-
-
-        } catch (\Exception $e) {
-            print "> " . $e->getMessage() . "\n";
-        }
-
-
-        return $results;
+        return [];
     }
 }

@@ -2,7 +2,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 SBG
+ * Copyright (c) 2017 SOFTWARE BUSINESS GROUP SP. Z O.O. <sbg@sbg.com.pl>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,40 +23,37 @@
  */
 
 
-
 use \DateTime as DateTime;
-use SBG\App\Helper\Minute;
-use SBG\App\Model\FetcherSelector;
+use SBG\App\Helper\MinuteStrategy;
 use SBG\App\Model\GoogleFetcher;
 use SBG\App\Model\RestFetcher;
 
-require_once 'vendor/autoload.php';
+require_once '../vendor/autoload.php';
 
 
 if (!isset($argv[1])) {
-    echo "give one arg\n";
-    return;
+    echo "usage php ./app.php <search term>\n";
+    return 1;
 }
 
 
-$dt = new DateTime();
-$texturalDt = $dt->format("Y-m-d H:i:s");
-$fs = new FetcherSelector(new Minute($dt));
+$searchTerm = (string)$argv[1];
+$now = new DateTime();
+$texturalNow = $now->format("Y-m-d H:i:s");
+$selectionStrategy = new MinuteStrategy($now);
 
-$fs->registerFetcher(new GoogleFetcher())
-    ->registerFetcher(new GoogleFetcher())
-    ->registerFetcher(new RestFetcher());
+$fetcherChain = new GoogleFetcher($selectionStrategy);
+$fetcherChain->setNextFetcher(new RestFetcher($selectionStrategy));
 
-$fetcher = $fs->getFetcher();
-$fetcherName = get_class($fetcher);
 
-$results = $fetcher->get($argv[1]);
+$results = $fetcherChain->fetch($searchTerm);
+
 
 foreach ($results as $r) {
     echo "#####################################################\n";
-    $msg = sprintf("%s - %s got result: %s\n",
-        $texturalDt,
-        $fetcherName,
+
+    $msg = sprintf("%s got result: %s\n",
+        $texturalNow,
         $r->getPayload()
     );
     echo $msg;

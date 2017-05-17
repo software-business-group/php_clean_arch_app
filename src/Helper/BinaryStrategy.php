@@ -2,7 +2,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 SBG
+ * Copyright (c) 2017 SOFTWARE BUSINESS GROUP SP. Z O.O. <sbg@sbg.com.pl>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,25 +22,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace SBG\App;
+namespace SBG\App\Helper;
 
-/**
- * Main
- *
- *
- * @author Artur Augustyniak <artur@aaugustyniak.pl>
- */
-class App
+
+interface BinaryStrategy
 {
+    /**
+     * @return bool
+     */
+    public function useGoogle();
 
     /**
-     * App entry point
-     * @return string
+     * @return bool
      */
-    public function run()
-    {
-        return "Hello World";
-    }
-
+    public function useRest();
 
 }

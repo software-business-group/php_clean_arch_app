@@ -24,57 +24,50 @@
 
 namespace SBG\App\Model;
 
-
 use SBG\App\Entity\Result;
+use SBG\App\Helper\BinaryStrategy;
+use SBG\App\Helper\MinuteStrategy;
 
-class RestFetcher extends DataFetcher
+abstract class DataFetcher
 {
+
+
+    /**
+     * @var MinuteStrategy
+     */
+    protected $strategy;
+
+
+    /**
+     * @var DataFetcher
+     */
+    protected $nextFetcher = null;
+
+
+    /**
+     * DataFetcher constructor.
+     * @param BinaryStrategy $s
+     */
+    public function __construct(BinaryStrategy $s)
+    {
+        $this->strategy = $s;
+        $this->nextFetcher = new NullFetcher($s);
+    }
+
+    /**
+     * @param DataFetcher $nextFetcher
+     */
+    public function setNextFetcher(DataFetcher $nextFetcher)
+    {
+        $this->nextFetcher = $nextFetcher;
+    }
+
 
     /**
      * @param $param string
      * @return Result[]
      */
-    public function fetch($param)
-    {
-        if ($this->strategy->useRest()) {
-            return $this->fetchDataImpl($param);
-        } else {
-            return $this->nextFetcher->fetch($param);
-        }
-    }
-
-    /**
-     * @return array
-     */
-    private function fetchDataImpl()
-    {
-        $results = [];
-        try {
-
-            $api = new \OtherCode\Rest\Rest(new \OtherCode\Rest\Core\Configuration(array(
-                'url' => 'http://jsonplaceholder.typicode.com/',
-                'httpheader' => array(
-                    'some_header' => 'some_value',
-                )
-            )));
-            $api->setDecoder("json");
-
-            //$query = urlencode("sunt aut facere repellat provident occaecati excepturi optio reprehenderit");
-            $queryString = sprintf("posts");
-
-            $response = $api->get($queryString);
-            foreach ($response->body as $e) {
-                $webResult = new Result();
-                $webResult->setPayload($e->body);
-                $results[] = $webResult;
-            }
+    public abstract function fetch($param);
 
 
-        } catch (\Exception $e) {
-            print "> " . $e->getMessage() . "\n";
-        }
-
-
-        return $results;
-    }
 }
