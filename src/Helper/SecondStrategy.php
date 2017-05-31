@@ -26,7 +26,7 @@ namespace SBG\App\Helper;
 
 use \DateTime as DateTime;
 
-class MinuteStrategy implements BinaryStrategy
+class SecondStrategy implements BinaryStrategy
 {
 
     /**
@@ -35,7 +35,7 @@ class MinuteStrategy implements BinaryStrategy
     private $time;
 
     /**
-     * MinuteStrategy constructor.
+     * SecondStrategy constructor.
      * @param DateTime $time
      */
     public function __construct(DateTime $time)
@@ -45,7 +45,7 @@ class MinuteStrategy implements BinaryStrategy
 
 
     /**
-     * Returns true if minute is odd
+     * Returns true if second is odd
      * @return bool
      */
     public function useGoogle()
@@ -55,7 +55,7 @@ class MinuteStrategy implements BinaryStrategy
 
 
     /**
-     * Returns true if minute is even
+     * Returns true if second is even
      * @return bool
      */
     public function useRest()

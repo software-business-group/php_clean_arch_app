@@ -49,8 +49,8 @@ class FetcherChainTest extends TestCase
      */
     public function null_chain_should_return_an_empty_array()
     {
-        $minute = $this->createPassiveMinuteMock();
-        $fs = new NullFetcher($minute);
+        $second = $this->createPassiveSecondMock();
+        $fs = new NullFetcher($second);
         $actual = $fs->fetch(self::SEARCH_TERM);
         $this->assertEmpty($actual);
     }
@@ -59,19 +59,19 @@ class FetcherChainTest extends TestCase
     /**
      * @return m\MockInterface
      */
-    private function createPassiveMinuteMock()
+    private function createPassiveSecondMock()
     {
-        return $this->createMinuteMock(self::MOCK_ODD);
+        return $this->createSecondMock(self::MOCK_ODD);
     }
 
     /**
      * @param boolean $isOdd
      * @return m\MockInterface
      */
-    private function createMinuteMock($isOdd)
+    private function createSecondMock($isOdd)
     {
         $methods = array('useGoogle' => $isOdd, 'useRest' => !$isOdd);
-        $mock = m::mock('SBG\App\Helper\MinuteStrategy', $methods);
+        $mock = m::mock('SBG\App\Helper\SecondStrategy', $methods);
         return $mock;
     }
 

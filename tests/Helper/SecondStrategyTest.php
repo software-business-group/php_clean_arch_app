@@ -28,10 +28,10 @@ namespace SBG\Tests\App\Helper;
 use \Mockery as m;
 use \PHPUnit_Framework_TestCase as TestCase;
 use \DateTime as DateTime;
-use SBG\App\Helper\MinuteStrategy;
+use SBG\App\Helper\SecondStrategy;
 
 
-class MinuteStrategyTest extends TestCase
+class SecondStrategyTest extends TestCase
 {
 
 
@@ -41,7 +41,7 @@ class MinuteStrategyTest extends TestCase
     public function edge_case_0()
     {
         $oddSecondsDt = new DateTime("2017-01-01 23:12:00");
-        $m = new MinuteStrategy($oddSecondsDt);
+        $m = new SecondStrategy($oddSecondsDt);
         $this->assertTrue($m->useRest());
     }
 
@@ -52,7 +52,7 @@ class MinuteStrategyTest extends TestCase
     public function edge_case_1()
     {
         $oddSecondsDt = new DateTime("2017-01-01 23:12:01");
-        $m = new MinuteStrategy($oddSecondsDt);
+        $m = new SecondStrategy($oddSecondsDt);
         $this->assertFalse($m->useRest());
         $this->assertTrue($m->useGoogle());
     }
@@ -63,7 +63,7 @@ class MinuteStrategyTest extends TestCase
     public function edge_case_60()
     {
         $oddSecondsDt = new DateTime("2017-01-01 23:12:60");
-        $m = new MinuteStrategy($oddSecondsDt);
+        $m = new SecondStrategy($oddSecondsDt);
         $this->assertTrue($m->useRest());
         $this->assertFalse($m->useGoogle());
     }
@@ -75,7 +75,7 @@ class MinuteStrategyTest extends TestCase
     public function return_true_is_odd_if_given_date_time_has_odd_seconds()
     {
         $oddSecondsDt = new DateTime("2017-01-01 23:12:13");
-        $m = new MinuteStrategy($oddSecondsDt);
+        $m = new SecondStrategy($oddSecondsDt);
         $this->assertTrue($m->useGoogle());
 
     }
@@ -87,7 +87,7 @@ class MinuteStrategyTest extends TestCase
     public function return_false_is_odd_if_given_date_time_has_even_seconds()
     {
         $oddSecondsDt = new DateTime("2017-01-01 23:12:12");
-        $m = new MinuteStrategy($oddSecondsDt);
+        $m = new SecondStrategy($oddSecondsDt);
         $this->assertFalse($m->useGoogle());
 
     }
@@ -99,7 +99,7 @@ class MinuteStrategyTest extends TestCase
     public function return_true_is_even_if_given_date_time_has_even_seconds()
     {
         $oddSecondsDt = new DateTime("2017-01-01 23:12:04");
-        $m = new MinuteStrategy($oddSecondsDt);
+        $m = new SecondStrategy($oddSecondsDt);
         $this->assertTrue($m->useRest());
 
     }
@@ -111,7 +111,7 @@ class MinuteStrategyTest extends TestCase
     public function return_false_is_even_if_given_date_time_has_odd_seconds()
     {
         $oddSecondsDt = new DateTime("2017-01-01 23:12:07");
-        $m = new MinuteStrategy($oddSecondsDt);
+        $m = new SecondStrategy($oddSecondsDt);
         $this->assertFalse($m->useRest());
 
     }

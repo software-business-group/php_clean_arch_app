@@ -26,14 +26,14 @@ namespace SBG\App\Model;
 
 use SBG\App\Entity\Result;
 use SBG\App\Helper\BinaryStrategy;
-use SBG\App\Helper\MinuteStrategy;
+use SBG\App\Helper\SecondStrategy;
 
 abstract class DataFetcher
 {
 
 
     /**
-     * @var MinuteStrategy
+     * @var SecondStrategy
      */
     protected $strategy;
 

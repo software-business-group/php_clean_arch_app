@@ -24,7 +24,7 @@
 
 
 use \DateTime as DateTime;
-use SBG\App\Helper\MinuteStrategy;
+use SBG\App\Helper\SecondStrategy;
 use SBG\App\Model\GoogleFetcher;
 use SBG\App\Model\RestFetcher;
 
@@ -40,7 +40,7 @@ if (!isset($argv[1])) {
 $searchTerm = (string)$argv[1];
 $now = new DateTime();
 $texturalNow = $now->format("Y-m-d H:i:s");
-$selectionStrategy = new MinuteStrategy($now);
+$selectionStrategy = new SecondStrategy($now);
 
 $fetcherChain = new GoogleFetcher($selectionStrategy);
 $fetcherChain->setNextFetcher(new RestFetcher($selectionStrategy));
